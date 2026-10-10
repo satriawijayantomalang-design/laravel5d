@@ -3,7 +3,7 @@
 | | |
 |---|---|
 | **Student** | Satria Wijayanto |
-| **NPM** | 9876543210 |
+| **NPM** | 2410010558 |
 | **Class** | TI 5D REG BJB |
 | **Status** | ✅ Done |
 | **Started** | 2026-10-06 |

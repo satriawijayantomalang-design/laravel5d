@@ -46,7 +46,7 @@ class LibraryHubSeeder extends Seeder
             [
                 'phone_number' => '081234567890',
                 'address' => 'Jl. Mistar Cokrokusumo No. 45, Banjarbaru, Kalimantan Selatan',
-                'identity_number' => '6372019876543210',
+                'identity_number' => '6372012410010558',
                 'driver_license_type' => 'SIM A & SIM C',
                 'avatar' => 'avatars/wira.png',
             ]
@@ -57,7 +57,7 @@ class LibraryHubSeeder extends Seeder
             [
                 'phone_number' => '085799988877',
                 'address' => 'Jl. A. Yani Km 33, Banjarbaru',
-                'identity_number' => '6372098765432100',
+                'identity_number' => '6372024100105580',
                 'driver_license_type' => 'SIM C',
                 'avatar' => 'avatars/budi.png',
             ]

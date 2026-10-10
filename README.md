@@ -7,7 +7,7 @@ LibraryHub adalah aplikasi web loan kendaraan dan peralatan berbasis **Laravel**
 | Identitas | Keterangan |
 |---|---|
 | **Nama** | Satria Wijayanto |
-| **NPM** | 9876543210 |
+| **NPM** | 2410010558 |
 | **Kelas** | TI 5D REG BJB |
 | **Mata Kuliah** | Pemrograman Berorientasi Objek 2 (PBO 2) |
 | **Dosen Pengampu** | Mirza Yogy Kurniawan |
