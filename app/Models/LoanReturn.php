@@ -6,12 +6,12 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class RentalReturn extends Model
+class LoanReturn extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'rental_id',
+        'loan_id',
         'actual_return_date',
         'late_days',
         'penalty_fee',
@@ -29,10 +29,10 @@ class RentalReturn extends Model
     }
 
     /**
-     * One-to-One: RentalReturn belongs to Rental.
+     * One-to-One: LoanReturn belongs to Loan.
      */
-    public function rental(): BelongsTo
+    public function loan(): BelongsTo
     {
-        return $this->belongsTo(Rental::class);
+        return $this->belongsTo(Loan::class);
     }
 }

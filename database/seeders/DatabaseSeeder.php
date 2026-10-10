@@ -13,7 +13,7 @@ class DatabaseSeeder extends Seeder
     {
         $this->call([
             CategorySeeder::class,
-            RentHubSeeder::class,
+            LibraryHubSeeder::class,
         ]);
     }
 }

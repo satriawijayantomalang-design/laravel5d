@@ -2,18 +2,18 @@
 
 namespace Database\Factories;
 
-use App\Models\Rental;
-use App\Models\RentalReturn;
+use App\Models\Loan;
+use App\Models\LoanReturn;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class RentalReturnFactory extends Factory
+class LoanReturnFactory extends Factory
 {
-    protected $model = RentalReturn::class;
+    protected $model = LoanReturn::class;
 
     public function definition(): array
     {
         return [
-            'rental_id' => Rental::factory(),
+            'loan_id' => Loan::factory(),
             'actual_return_date' => now()->format('Y-m-d'),
             'late_days' => 0,
             'penalty_fee' => 0,

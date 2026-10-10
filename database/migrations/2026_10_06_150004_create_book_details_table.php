@@ -11,9 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('item_specifications', function (Blueprint $table) {
+        Schema::create('book_details', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('rental_item_id')->constrained('rental_items')->cascadeOnDelete()->unique();
+            $table->foreignId('book_id')->constrained('books')->cascadeOnDelete()->unique();
             $table->string('serial_or_plate_number');
             $table->integer('year_of_manufacture')->nullable();
             $table->string('color')->nullable();
@@ -28,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('item_specifications');
+        Schema::dropIfExists('book_details');
     }
 };

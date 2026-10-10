@@ -3,13 +3,13 @@
 namespace Database\Factories;
 
 use App\Models\Category;
-use App\Models\RentalItem;
+use App\Models\Book;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 
-class RentalItemFactory extends Factory
+class BookFactory extends Factory
 {
-    protected $model = RentalItem::class;
+    protected $model = Book::class;
 
     public function definition(): array
     {
@@ -19,7 +19,7 @@ class RentalItemFactory extends Factory
             'name' => ucfirst($name),
             'slug' => Str::slug($name) . '-' . fake()->unique()->numberBetween(100, 999),
             'brand' => fake()->company(),
-            'daily_rate' => fake()->numberBetween(50000, 750000),
+            'borrow_fee' => fake()->numberBetween(50000, 750000),
             'stock_quantity' => fake()->numberBetween(1, 10),
             'status' => 'available',
             'description' => fake()->paragraph(),

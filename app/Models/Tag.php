@@ -16,11 +16,11 @@ class Tag extends Model
     ];
 
     /**
-     * Many-to-Many: Tag belongs to many rental items.
+     * Many-to-Many: Tag belongs to many loan books.
      */
-    public function rentalItems(): BelongsToMany
+    public function books(): BelongsToMany
     {
-        return $this->belongsToMany(RentalItem::class, 'item_tag')
+        return $this->belongsToMany(Book::class, 'book_tag')
             ->withTimestamps();
     }
 }

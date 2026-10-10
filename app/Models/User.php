@@ -43,11 +43,11 @@ class User extends Authenticatable
     }
 
     /**
-     * One-to-Many: User has many rentals.
+     * One-to-Many: User has many loans.
      */
-    public function rentals(): HasMany
+    public function loans(): HasMany
     {
-        return $this->hasMany(Rental::class);
+        return $this->hasMany(Loan::class);
     }
 
     /**
@@ -69,10 +69,10 @@ class User extends Authenticatable
     }
 
     /**
-     * Has-Many-Through: User has many rental details through rentals.
+     * Has-Many-Through: User has many loan details through loans.
      */
-    public function rentalDetails(): HasManyThrough
+    public function loanDetails(): HasManyThrough
     {
-        return $this->hasManyThrough(RentalDetail::class, Rental::class);
+        return $this->hasManyThrough(LoanDetail::class, Loan::class);
     }
 }

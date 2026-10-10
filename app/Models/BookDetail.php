@@ -6,12 +6,12 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class ItemSpecification extends Model
+class BookDetail extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'rental_item_id',
+        'book_id',
         'serial_or_plate_number',
         'year_of_manufacture',
         'color',
@@ -28,10 +28,10 @@ class ItemSpecification extends Model
     }
 
     /**
-     * One-to-One: Specification belongs to RentalItem.
+     * One-to-One: Specification belongs to Book.
      */
-    public function rentalItem(): BelongsTo
+    public function book(): BelongsTo
     {
-        return $this->belongsTo(RentalItem::class);
+        return $this->belongsTo(Book::class);
     }
 }

@@ -1,13 +1,13 @@
-# RentHub — Equipment & Vehicle Rental System
+# LibraryHub — Library & Book Management System
 
-RentHub adalah aplikasi web rental kendaraan dan peralatan berbasis **Laravel**, **Blade**, dan **Tailwind CSS**. Proyek ini dikembangkan untuk tugas mata kuliah *Pemrograman Berorientasi Objek 2 (PBO 2)* dengan fokus utama pada perancangan basis data dan implementasi **relasi antar tabel** menggunakan Eloquent ORM.
+LibraryHub adalah aplikasi web loan kendaraan dan peralatan berbasis **Laravel**, **Blade**, dan **Tailwind CSS**. Proyek ini dikembangkan untuk tugas mata kuliah *Pemrograman Berorientasi Objek 2 (PBO 2)* dengan fokus utama pada perancangan basis data dan implementasi **relasi antar tabel** menggunakan Eloquent ORM.
 
 ## Informasi Mahasiswa
 
 | Identitas | Keterangan |
 |---|---|
-| **Nama** | Wira Yudha Pamuji |
-| **NPM** | 2410010396 |
+| **Nama** | Satria Wijayanto |
+| **NPM** | 9876543210 |
 | **Kelas** | TI 5D REG BJB |
 | **Mata Kuliah** | Pemrograman Berorientasi Objek 2 (PBO 2) |
 | **Dosen Pengampu** | Mirza Yogy Kurniawan |
@@ -19,8 +19,8 @@ RentHub adalah aplikasi web rental kendaraan dan peralatan berbasis **Laravel**,
 
 - **Katalog Sewa Multi-Kategori**: Mobil, Sepeda Motor, Kamera & Fotografi, Alat Camping & Outdoor, Sound System & Audio, dan Alat Konstruksi & Pertukangan.
 - **Spesifikasi Detail Unit**: Rincian nomor polisi/seri, tahun pembuatan, warna, catatan kondisi, dan spesifikasi teknis dalam format JSON.
-- **Sistem Transaksi Sewa (Rentals)**: Manajemen durasi sewa, kalkulasi biaya harian, dan pencatatan kondisi barang sebelum sewa.
-- **Pengembalian & Denda (Rental Returns)**: Verifikasi kondisi barang pasca-sewa, kalkulasi keterlambatan (hari), dan denda penalti.
+- **Sistem Transaksi Sewa (Loans)**: Manajemen durasi sewa, kalkulasi biaya harian, dan pencatatan kondisi barang sebelum sewa.
+- **Pengembalian & Denda (Loan Returns)**: Verifikasi kondisi barang pasca-sewa, kalkulasi keterlambatan (hari), dan denda penalti.
 - **Tag Fleksibel**: Pengelompokan barang berdasarkan tag (Best Seller, Premium, Outdoor, Hemat, Portable, New Arrival).
 - **Kupon Promosi (Promotions)**: Penggunaan kupon diskon dengan pencatatan riwayat pemakaian dan nominal potongan.
 - **Ulasan & Rating (Reviews)**: Ulasan pelanggan (skala bintang 1–5) terhadap unit barang sewa.
@@ -53,19 +53,19 @@ erDiagram
 | Tipe Relasi | Pasangan Model | Metode Eloquent | Deskripsi |
 |---|---|---|---|
 | **One-to-One** | `User` ↔ `Profile` | `hasOne` / `belongsTo` | Setiap pengguna memiliki satu profil biodata |
-| **One-to-One** | `RentalItem` ↔ `ItemSpecification` | `hasOne` / `belongsTo` | Setiap barang memiliki satu catatan spesifikasi teknis |
-| **One-to-One** | `Rental` ↔ `RentalReturn` | `hasOne` / `belongsTo` | Setiap transaksi sewa memiliki satu catatan pengembalian |
-| **One-to-Many** | `Category` → `RentalItem` | `hasMany` / `belongsTo` | Satu kategori menaungi banyak barang sewa |
-| **One-to-Many** | `User` → `Rental` | `hasMany` / `belongsTo` | Satu pengguna memiliki banyak transaksi sewa |
+| **One-to-One** | `Book` ↔ `BookDetail` | `hasOne` / `belongsTo` | Setiap barang memiliki satu catatan spesifikasi teknis |
+| **One-to-One** | `Loan` ↔ `LoanReturn` | `hasOne` / `belongsTo` | Setiap transaksi sewa memiliki satu catatan pengembalian |
+| **One-to-Many** | `Category` → `Book` | `hasMany` / `belongsTo` | Satu kategori menaungi banyak barang sewa |
+| **One-to-Many** | `User` → `Loan` | `hasMany` / `belongsTo` | Satu pengguna memiliki banyak transaksi sewa |
 | **One-to-Many** | `User` → `Review` | `hasMany` / `belongsTo` | Satu pengguna dapat menulis banyak ulasan |
-| **One-to-Many** | `RentalItem` → `Review` | `hasMany` / `belongsTo` | Satu barang sewa dapat menerima banyak ulasan |
-| **One-to-Many** | `Rental` → `RentalDetail` | `hasMany` / `belongsTo` | Satu sewa terdiri dari banyak baris detail barang |
-| **One-to-Many** | `RentalItem` → `RentalDetail` | `hasMany` / `belongsTo` | Satu barang tercatat di banyak detail transaksi |
-| **Many-to-Many** | `RentalItem` ↔ `Tag` | `belongsToMany` | Relasi tag produk melalui tabel pivot `item_tag` |
-| **Many-to-Many (Pivot Data)** | `Rental` ↔ `RentalItem` | `belongsToMany` + `withPivot` | Detail item sewa: `quantity`, `price_per_day`, `subtotal`, `condition_before` |
+| **One-to-Many** | `Book` → `Review` | `hasMany` / `belongsTo` | Satu barang sewa dapat menerima banyak ulasan |
+| **One-to-Many** | `Loan` → `LoanDetail` | `hasMany` / `belongsTo` | Satu sewa terdiri dari banyak baris detail barang |
+| **One-to-Many** | `Book` → `LoanDetail` | `hasMany` / `belongsTo` | Satu barang tercatat di banyak detail transaksi |
+| **Many-to-Many** | `Book` ↔ `Tag` | `belongsToMany` | Relasi tag produk melalui tabel pivot `book_tag` |
+| **Many-to-Many (Pivot Data)** | `Loan` ↔ `Book` | `belongsToMany` + `withPivot` | Detail item sewa: `quantity`, `fee_per_day`, `subtotal`, `condition_out` |
 | **Many-to-Many (Pivot Data)** | `User` ↔ `Promotion` | `belongsToMany` + `withPivot` | Penggunaan kupon diskon: `used_at`, `discount_amount` |
-| **Has-Many-Through** | `User` → `RentalDetail` | `hasManyThrough` | Mengakses seluruh detail barang sewa milik pengguna melalui transaksi |
-| **Has-Many-Through** | `Category` → `RentalDetail` | `hasManyThrough` | Mengakses riwayat peminjaman per kategori melalui barang |
+| **Has-Many-Through** | `User` → `LoanDetail` | `hasManyThrough` | Mengakses seluruh detail barang sewa milik pengguna melalui transaksi |
+| **Has-Many-Through** | `Category` → `LoanDetail` | `hasManyThrough` | Mengakses riwayat peminjaman per kategori melalui barang |
 | **Has-Many-Through** | `Category` → `Review` | `hasManyThrough` | Mengakses seluruh ulasan dalam kategori melalui barang |
 
 ---
@@ -74,7 +74,7 @@ erDiagram
 
 ```bash
 # 1. Clone repository dari fork
-git clone https://github.com/wirayudhapamuji123/laravel5d.git
+git clone https://github.com/satriawijayantomalang-design/laravel5d.git
 cd laravel5d
 
 # 2. Pindah ke branch fitur
@@ -129,7 +129,7 @@ app/Models/              # Model Eloquent dan definisi relasi
 database/
   migrations/            # Definisi skema tabel & constraint
   factories/             # Generator data uji untuk setiap model
-  seeders/               # Seeder kategori dan data sampel RentHub
+  seeders/               # Seeder kategori dan data sampel LibraryHub
 tests/
   Feature/               # Pengujian otomatis relasi basis data
 docs/

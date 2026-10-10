@@ -12,7 +12,7 @@ class Review extends Model
 
     protected $fillable = [
         'user_id',
-        'rental_item_id',
+        'book_id',
         'rating',
         'comment',
     ];
@@ -33,10 +33,10 @@ class Review extends Model
     }
 
     /**
-     * One-to-Many: Review belongs to RentalItem.
+     * One-to-Many: Review belongs to Book.
      */
-    public function rentalItem(): BelongsTo
+    public function book(): BelongsTo
     {
-        return $this->belongsTo(RentalItem::class);
+        return $this->belongsTo(Book::class);
     }
 }

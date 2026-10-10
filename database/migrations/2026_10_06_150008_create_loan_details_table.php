@@ -11,14 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('rental_details', function (Blueprint $table) {
+        Schema::create('loan_details', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('rental_id')->constrained('rentals')->cascadeOnDelete();
-            $table->foreignId('rental_item_id')->constrained('rental_items')->cascadeOnDelete();
+            $table->foreignId('loan_id')->constrained('loans')->cascadeOnDelete();
+            $table->foreignId('book_id')->constrained('books')->cascadeOnDelete();
             $table->integer('quantity')->default(1);
-            $table->decimal('price_per_day', 12, 2);
+            $table->decimal('fee_per_day', 12, 2);
             $table->decimal('subtotal', 12, 2);
-            $table->string('condition_before')->default('Baik');
+            $table->string('condition_out')->default('Baik');
             $table->timestamps();
         });
     }
@@ -28,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('rental_details');
+        Schema::dropIfExists('loan_details');
     }
 };

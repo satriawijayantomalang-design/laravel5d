@@ -9,12 +9,12 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
-class Rental extends Model
+class Loan extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'rental_code',
+        'loan_code',
         'user_id',
         'start_date',
         'end_date',
@@ -33,7 +33,7 @@ class Rental extends Model
     }
 
     /**
-     * One-to-Many: Rental belongs to User.
+     * One-to-Many: Loan belongs to User.
      */
     public function user(): BelongsTo
     {
@@ -41,28 +41,28 @@ class Rental extends Model
     }
 
     /**
-     * One-to-Many: Rental has many rental details.
+     * One-to-Many: Loan has many loan details.
      */
     public function details(): HasMany
     {
-        return $this->hasMany(RentalDetail::class);
+        return $this->hasMany(LoanDetail::class);
     }
 
     /**
-     * One-to-One: Rental has one return record.
+     * One-to-One: Loan has one return record.
      */
     public function returnRecord(): HasOne
     {
-        return $this->hasOne(RentalReturn::class);
+        return $this->hasOne(LoanReturn::class);
     }
 
     /**
-     * Many-to-Many with pivot: Rental has many rental items.
+     * Many-to-Many with pivot: Loan has many loan books.
      */
-    public function items(): BelongsToMany
+    public function books(): BelongsToMany
     {
-        return $this->belongsToMany(RentalItem::class, 'rental_details')
-            ->withPivot(['quantity', 'price_per_day', 'subtotal', 'condition_before'])
+        return $this->belongsToMany(Book::class, 'loan_details')
+            ->withPivot(['quantity', 'fee_per_day', 'subtotal', 'condition_out'])
             ->withTimestamps();
     }
 }

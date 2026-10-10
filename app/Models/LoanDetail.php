@@ -6,41 +6,41 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class RentalDetail extends Model
+class LoanDetail extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'rental_id',
-        'rental_item_id',
+        'loan_id',
+        'book_id',
         'quantity',
-        'price_per_day',
+        'fee_per_day',
         'subtotal',
-        'condition_before',
+        'condition_out',
     ];
 
     protected function casts(): array
     {
         return [
             'quantity' => 'integer',
-            'price_per_day' => 'decimal:2',
+            'fee_per_day' => 'decimal:2',
             'subtotal' => 'decimal:2',
         ];
     }
 
     /**
-     * Detail belongs to Rental.
+     * Detail belongs to Loan.
      */
-    public function rental(): BelongsTo
+    public function loan(): BelongsTo
     {
-        return $this->belongsTo(Rental::class);
+        return $this->belongsTo(Loan::class);
     }
 
     /**
-     * Detail belongs to RentalItem.
+     * Detail belongs to Book.
      */
-    public function rentalItem(): BelongsTo
+    public function book(): BelongsTo
     {
-        return $this->belongsTo(RentalItem::class);
+        return $this->belongsTo(Book::class);
     }
 }

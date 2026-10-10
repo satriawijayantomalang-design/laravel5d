@@ -2,13 +2,13 @@
 
 namespace Database\Factories;
 
-use App\Models\Rental;
+use App\Models\Loan;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class RentalFactory extends Factory
+class LoanFactory extends Factory
 {
-    protected $model = Rental::class;
+    protected $model = Loan::class;
 
     public function definition(): array
     {
@@ -16,7 +16,7 @@ class RentalFactory extends Factory
         $endDate = (clone $startDate)->modify('+3 days');
 
         return [
-            'rental_code' => 'RNT-' . fake()->unique()->numerify('######'),
+            'loan_code' => 'RNT-' . fake()->unique()->numerify('######'),
             'user_id' => User::factory(),
             'start_date' => $startDate->format('Y-m-d'),
             'end_date' => $endDate->format('Y-m-d'),

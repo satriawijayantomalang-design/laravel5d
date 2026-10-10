@@ -16,13 +16,13 @@ class CategorySeeder extends Seeder
             [
                 'name' => 'Mobil',
                 'slug' => 'mobil',
-                'description' => 'Rental kendaraan roda empat untuk perjalanan keluarga, dinas, dan wisata.',
+                'description' => 'Loan kendaraan roda empat untuk perjalanan keluarga, dinas, dan wisata.',
                 'icon' => 'car',
             ],
             [
                 'name' => 'Sepeda Motor',
                 'slug' => 'sepeda-motor',
-                'description' => 'Rental sepeda motor matic, manual, dan trail untuk mobilitas cepat.',
+                'description' => 'Loan sepeda motor matic, manual, dan trail untuk mobilitas cepat.',
                 'icon' => 'motorcycle',
             ],
             [

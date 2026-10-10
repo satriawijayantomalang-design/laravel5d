@@ -11,9 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('rental_returns', function (Blueprint $table) {
+        Schema::create('loan_returns', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('rental_id')->constrained('rentals')->cascadeOnDelete()->unique();
+            $table->foreignId('loan_id')->constrained('loans')->cascadeOnDelete()->unique();
             $table->date('actual_return_date');
             $table->integer('late_days')->default(0);
             $table->decimal('penalty_fee', 12, 2)->default(0);
@@ -28,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('rental_returns');
+        Schema::dropIfExists('loan_returns');
     }
 };

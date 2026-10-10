@@ -3,20 +3,20 @@
 namespace Database\Seeders;
 
 use App\Models\Category;
-use App\Models\ItemSpecification;
+use App\Models\BookDetail;
 use App\Models\Profile;
 use App\Models\Promotion;
-use App\Models\Rental;
-use App\Models\RentalDetail;
-use App\Models\RentalItem;
-use App\Models\RentalReturn;
+use App\Models\Loan;
+use App\Models\LoanDetail;
+use App\Models\Book;
+use App\Models\LoanReturn;
 use App\Models\Review;
 use App\Models\Tag;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 
-class RentHubSeeder extends Seeder
+class LibraryHubSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -27,7 +27,7 @@ class RentHubSeeder extends Seeder
         $user = User::firstOrCreate(
             ['email' => 'wirayudhapamuji@gmail.com'],
             [
-                'name' => 'Wira Yudha Pamuji',
+                'name' => 'Satria Wijayanto',
                 'password' => Hash::make('password'),
             ]
         );
@@ -46,7 +46,7 @@ class RentHubSeeder extends Seeder
             [
                 'phone_number' => '081234567890',
                 'address' => 'Jl. Mistar Cokrokusumo No. 45, Banjarbaru, Kalimantan Selatan',
-                'identity_number' => '6372012410010396',
+                'identity_number' => '6372019876543210',
                 'driver_license_type' => 'SIM A & SIM C',
                 'avatar' => 'avatars/wira.png',
             ]
@@ -78,7 +78,7 @@ class RentHubSeeder extends Seeder
             $tags[$t['slug']] = Tag::firstOrCreate(['slug' => $t['slug']], $t);
         }
 
-        // 4. Create Rental Items with Categories & Specifications
+        // 4. Create Loan Items with Categories & Specifications
         $mobilCat = Category::where('slug', 'mobil')->first();
         $motorCat = Category::where('slug', 'sepeda-motor')->first();
         $kameraCat = Category::where('slug', 'kamera-fotografi')->first();
@@ -86,13 +86,13 @@ class RentHubSeeder extends Seeder
         $audioCat = Category::where('slug', 'sound-system-audio')->first();
         $toolsCat = Category::where('slug', 'alat-konstruksi')->first();
 
-        $items = [
+        $books = [
             [
                 'category_id' => $mobilCat->id,
                 'name' => 'Toyota All New Avanza 2023',
                 'slug' => 'toyota-all-new-avanza-2023',
                 'brand' => 'Toyota',
-                'daily_rate' => 350000,
+                'borrow_fee' => 350000,
                 'stock_quantity' => 3,
                 'status' => 'available',
                 'description' => 'Mobil keluarga 7-seater irit bahan bakar, transmisi CVT, kabin luas dan nyaman.',
@@ -110,7 +110,7 @@ class RentHubSeeder extends Seeder
                 'name' => 'Honda CRF 150L Trail Adventure',
                 'slug' => 'honda-crf-150l-trail-adventure',
                 'brand' => 'Honda',
-                'daily_rate' => 150000,
+                'borrow_fee' => 150000,
                 'stock_quantity' => 2,
                 'status' => 'available',
                 'description' => 'Motor trail dual-purpose tangguh siap jelajah alam maupun jalan perkotaan.',
@@ -128,7 +128,7 @@ class RentHubSeeder extends Seeder
                 'name' => 'Sony Alpha A7 IV Mirrorless Body',
                 'slug' => 'sony-alpha-a7-iv-mirrorless',
                 'brand' => 'Sony',
-                'daily_rate' => 300000,
+                'borrow_fee' => 300000,
                 'stock_quantity' => 2,
                 'status' => 'available',
                 'description' => 'Kamera hybrid 33MP full-frame perekaman video 4K 60p 10-bit untuk profesional.',
@@ -146,7 +146,7 @@ class RentHubSeeder extends Seeder
                 'name' => 'Tenda Dome Eiger Guardian 4 Person',
                 'slug' => 'tenda-dome-eiger-guardian-4p',
                 'brand' => 'Eiger',
-                'daily_rate' => 60000,
+                'borrow_fee' => 60000,
                 'stock_quantity' => 5,
                 'status' => 'available',
                 'description' => 'Tenda camping waterproof double layer kapasitas 4 orang dengan vestibule luas.',
@@ -164,7 +164,7 @@ class RentHubSeeder extends Seeder
                 'name' => 'JBL PartyBox 310 Portable Bluetooth Speaker',
                 'slug' => 'jbl-partybox-310-portable-speaker',
                 'brand' => 'JBL',
-                'daily_rate' => 200000,
+                'borrow_fee' => 200000,
                 'stock_quantity' => 2,
                 'status' => 'available',
                 'description' => 'Speaker pesta 240W RMS dengan efek lampu dinamis dan baterai hingga 18 jam.',
@@ -182,7 +182,7 @@ class RentHubSeeder extends Seeder
                 'name' => 'Makita Cordless Hammer Drill 18V',
                 'slug' => 'makita-cordless-hammer-drill-18v',
                 'brand' => 'Makita',
-                'daily_rate' => 75000,
+                'borrow_fee' => 75000,
                 'stock_quantity' => 4,
                 'status' => 'available',
                 'description' => 'Bor baterai brushless 18V 2 baterai + charger cepat untuk beton, besi, dan kayu.',
@@ -198,18 +198,18 @@ class RentHubSeeder extends Seeder
         ];
 
         $createdItems = [];
-        foreach ($items as $itemData) {
+        foreach ($books as $itemData) {
             $specData = $itemData['spec'];
             $tagSlugs = $itemData['tags'];
             unset($itemData['spec'], $itemData['tags']);
 
-            $item = RentalItem::updateOrCreate(['slug' => $itemData['slug']], $itemData);
+            $item = Book::updateOrCreate(['slug' => $itemData['slug']], $itemData);
             $createdItems[$item->slug] = $item;
 
-            // One-to-One: ItemSpecification
-            ItemSpecification::updateOrCreate(
-                ['rental_item_id' => $item->id],
-                array_merge($specData, ['rental_item_id' => $item->id])
+            // One-to-One: BookDetail
+            BookDetail::updateOrCreate(
+                ['book_id' => $item->id],
+                array_merge($specData, ['book_id' => $item->id])
             );
 
             // Many-to-Many: Attach Tags
@@ -251,9 +251,9 @@ class RentHubSeeder extends Seeder
             ],
         ]);
 
-        // 6. Create Completed Rental Transaction with details & return record
-        $completedRental = Rental::firstOrCreate(
-            ['rental_code' => 'RNT-202610-001'],
+        // 6. Create Completed Loan Transaction with details & return record
+        $completedLoan = Loan::firstOrCreate(
+            ['loan_code' => 'RNT-202610-001'],
             [
                 'user_id' => $user->id,
                 'start_date' => now()->subDays(5)->format('Y-m-d'),
@@ -264,22 +264,22 @@ class RentHubSeeder extends Seeder
             ]
         );
 
-        RentalDetail::firstOrCreate(
+        LoanDetail::firstOrCreate(
             [
-                'rental_id' => $completedRental->id,
-                'rental_item_id' => $createdItems['toyota-all-new-avanza-2023']->id,
+                'loan_id' => $completedLoan->id,
+                'book_id' => $createdItems['toyota-all-new-avanza-2023']->id,
             ],
             [
                 'quantity' => 1,
-                'price_per_day' => 350000.00,
+                'fee_per_day' => 350000.00,
                 'subtotal' => 1050000.00,
-                'condition_before' => 'Sangat Mulus, bensin full',
+                'condition_out' => 'Sangat Mulus, bensin full',
             ]
         );
 
-        // One-to-One: RentalReturn for completed rental
-        RentalReturn::updateOrCreate(
-            ['rental_id' => $completedRental->id],
+        // One-to-One: LoanReturn for completed loan
+        LoanReturn::updateOrCreate(
+            ['loan_id' => $completedLoan->id],
             [
                 'actual_return_date' => now()->subDays(2)->format('Y-m-d'),
                 'late_days' => 0,
@@ -289,9 +289,9 @@ class RentHubSeeder extends Seeder
             ]
         );
 
-        // 7. Create Active Rental Transaction
-        $activeRental = Rental::firstOrCreate(
-            ['rental_code' => 'RNT-202610-002'],
+        // 7. Create Active Loan Transaction
+        $activeLoan = Loan::firstOrCreate(
+            ['loan_code' => 'RNT-202610-002'],
             [
                 'user_id' => $user->id,
                 'start_date' => now()->format('Y-m-d'),
@@ -302,48 +302,48 @@ class RentHubSeeder extends Seeder
             ]
         );
 
-        RentalDetail::firstOrCreate(
+        LoanDetail::firstOrCreate(
             [
-                'rental_id' => $activeRental->id,
-                'rental_item_id' => $createdItems['honda-crf-150l-trail-adventure']->id,
+                'loan_id' => $activeLoan->id,
+                'book_id' => $createdItems['honda-crf-150l-trail-adventure']->id,
             ],
             [
                 'quantity' => 1,
-                'price_per_day' => 150000.00,
+                'fee_per_day' => 150000.00,
                 'subtotal' => 300000.00,
-                'condition_before' => 'Kondisi siap pakai offroad',
+                'condition_out' => 'Kondisi siap pakai offroad',
             ]
         );
 
-        RentalDetail::firstOrCreate(
+        LoanDetail::firstOrCreate(
             [
-                'rental_id' => $activeRental->id,
-                'rental_item_id' => $createdItems['tenda-dome-eiger-guardian-4p']->id,
+                'loan_id' => $activeLoan->id,
+                'book_id' => $createdItems['tenda-dome-eiger-guardian-4p']->id,
             ],
             [
                 'quantity' => 1,
-                'price_per_day' => 60000.00,
+                'fee_per_day' => 60000.00,
                 'subtotal' => 120000.00,
-                'condition_before' => 'Lengkap frame dan pasak',
+                'condition_out' => 'Lengkap frame dan pasak',
             ]
         );
 
-        // 8. Create Reviews (One-to-Many User -> Review, RentalItem -> Review)
+        // 8. Create Reviews (One-to-Many User -> Review, Book -> Review)
         Review::firstOrCreate(
             [
                 'user_id' => $user->id,
-                'rental_item_id' => $createdItems['toyota-all-new-avanza-2023']->id,
+                'book_id' => $createdItems['toyota-all-new-avanza-2023']->id,
             ],
             [
                 'rating' => 5,
-                'comment' => 'Mobil sangat nyaman dan irit untuk perjalanan jauh. Pelayanan rental sangat ramah dan profesional!',
+                'comment' => 'Mobil sangat nyaman dan irit untuk perjalanan jauh. Pelayanan loan sangat ramah dan profesional!',
             ]
         );
 
         Review::firstOrCreate(
             [
                 'user_id' => $demoUser->id,
-                'rental_item_id' => $createdItems['sony-alpha-a7-iv-mirrorless']->id,
+                'book_id' => $createdItems['sony-alpha-a7-iv-mirrorless']->id,
             ],
             [
                 'rating' => 5,

@@ -19,26 +19,26 @@ class Category extends Model
     ];
 
     /**
-     * One-to-Many: Category has many rental items.
+     * One-to-Many: Category has many loan books.
      */
-    public function rentalItems(): HasMany
+    public function books(): HasMany
     {
-        return $this->hasMany(RentalItem::class);
+        return $this->hasMany(Book::class);
     }
 
     /**
-     * Has-Many-Through: Category has many rental details through rental items.
+     * Has-Many-Through: Category has many loan details through loan books.
      */
-    public function rentalDetails(): HasManyThrough
+    public function loanDetails(): HasManyThrough
     {
-        return $this->hasManyThrough(RentalDetail::class, RentalItem::class);
+        return $this->hasManyThrough(LoanDetail::class, Book::class);
     }
 
     /**
-     * Has-Many-Through: Category has many reviews through rental items.
+     * Has-Many-Through: Category has many reviews through loan books.
      */
     public function reviews(): HasManyThrough
     {
-        return $this->hasManyThrough(Review::class, RentalItem::class);
+        return $this->hasManyThrough(Review::class, Book::class);
     }
 }
